@@ -1,0 +1,18 @@
+#+TITLE: saveplace-pdf-view
+
+=saveplace-pdf-view= adds support for pdf-view buffers (see [[https://github.com/politza/pdf-tools][pdf-tools]])
+in the built-in mode =save-place=.  This will store the place
+(e.g. the current page and zoom) of PDF buffers under =pdf-view-mode=,
+and revisiting the PDF files later will restore the saved place.
+
+Note: This won't work with =doc-view-mode=.
+
+* Usage
+
+Simply require the package in your init file, and make sure
+=save-place= is enabled.
+
+#+BEGIN_SRC elisp
+(require 'saveplace-pdf-view)
+(save-place-mode 1)
+#+END_SRC
