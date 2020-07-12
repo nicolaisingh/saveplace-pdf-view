@@ -5,7 +5,8 @@
 ;; Author: Nicolai Singh <nicolaisingh at pm.me>
 ;; URL: https://github.com/nicolaisingh/saveplace-pdf-view
 ;; Version: 0.1.0
-;; Keywords: bookmarks, pdf, saveplace
+;; Keywords: files, convenience
+;; Package-Requires: ((emacs "24.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -35,7 +36,7 @@
 
 (require 'saveplace)
 
-(defun save-place-pdf-view-find-file ()
+(defun saveplace-pdf-view-find-file ()
   "Restore the saved place for the PDF file, if there is one."
   (or save-place-loaded (load-save-place-alist-from-file))
   (let* ((cell (assoc buffer-file-name save-place-alist)))
@@ -45,7 +46,7 @@
       (pdf-view-bookmark-jump (cdr (assq 'pdf-view-bookmark (cdr cell)))))
     (setq save-place-mode t)))
 
-(defun save-place-pdf-view-to-alist ()
+(defun saveplace-pdf-view-to-alist ()
   "Save the PDF file's place using pdf-view's `pdf-view-bookmark-make-record'."
   (or save-place-loaded (load-save-place-alist-from-file))
   (let ((item buffer-file-name))
@@ -69,24 +70,24 @@
                 (cons (cons item `((pdf-view-bookmark . ,bookmark)))
                       save-place-alist)))))))
 
-(defun save-place-pdf-view-find-file-advice (orig-fun &rest args)
+(defun saveplace-pdf-view-find-file-advice (orig-fun &rest args)
   "Function to advice around `save-place-find-file-hook'.
 If the buffer being visited is not in `pdf-view-mode', call the
 original function ORIG-FUN with the ARGS."
   (if (not (derived-mode-p 'pdf-view-mode))
       (apply orig-fun args)
-    (save-place-pdf-view-find-file)))
+    (saveplace-pdf-view-find-file)))
 
-(defun save-place-pdf-view-to-alist-advice (orig-fun &rest args)
+(defun saveplace-pdf-view-to-alist-advice (orig-fun &rest args)
   "Function to advice around `save-place-to-alist'.
 If the buffer being visited is not in `pdf-view-mode', call the
 original function ORIG-FUN with the ARGS."
   (if (not (derived-mode-p 'pdf-view-mode))
       (apply orig-fun args)
-    (save-place-pdf-view-to-alist)))
+    (saveplace-pdf-view-to-alist)))
 
-(advice-add 'save-place-find-file-hook :around #'save-place-pdf-view-find-file-advice)
-(advice-add 'save-place-to-alist :around #'save-place-pdf-view-to-alist-advice)
+(advice-add 'save-place-find-file-hook :around #'saveplace-pdf-view-find-file-advice)
+(advice-add 'save-place-to-alist :around #'saveplace-pdf-view-to-alist-advice)
 
 (provide 'saveplace-pdf-view)
 ;;; saveplace-pdf-view.el ends here
