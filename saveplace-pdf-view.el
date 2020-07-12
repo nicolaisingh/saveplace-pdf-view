@@ -1,4 +1,4 @@
-;;; saveplace-pdf-view.el --- Save place in pdf-view buffers
+;;; saveplace-pdf-view.el --- Save place in pdf-view buffers. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020 Nicolai Singh
 
