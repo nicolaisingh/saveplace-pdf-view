@@ -6,7 +6,7 @@
 ;; URL: https://github.com/nicolaisingh/saveplace-pdf-view
 ;; Version: 0.1.0
 ;; Keywords: files, convenience
-;; Package-Requires: ((emacs "24.1"))
+;; Package-Requires: ((emacs "24.1") (pdf-tools "1.0"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@
 ;;; Code:
 
 (require 'saveplace)
+(require 'pdf-tools)
 
 (defun saveplace-pdf-view-find-file ()
   "Restore the saved place for the PDF file, if there is one."
