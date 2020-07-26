@@ -7,6 +7,19 @@ and revisiting the PDF files later will restore the saved place.
 
 Note: This won't work with =doc-view-mode=.
 
+* Installation
+
+** MELPA
+
+If you use [[https://melpa.org/][MELPA]], run:
+#+BEGIN_SRC elisp
+M-x package-install saveplace-pdf-view
+#+END_SRC
+
+** Manual
+
+Save a copy of the code locally, and add it to your =load-path=.
+
 * Usage
 
 Simply require the package in your init file, and make sure
