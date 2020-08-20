@@ -29,3 +29,16 @@ Simply require the package in your init file, and make sure
 (require 'saveplace-pdf-view)
 (save-place-mode 1)
 #+END_SRC
+
+* Similar Packages
+
+- pdf-view-restore ([[https://github.com/007kevin/pdf-view-restore][Link]]):
+  - From code review (commit 5a1947c): For each PDF file you visit in
+    Emacs, =pdf-view-restore= will persist the last viewed page in a
+    separate file.  This file is stored relative to the PDF file
+    location.
+  - =saveplace-pdf-view= (this package) persists other information
+    like the scale amount and scroll position in addition to the last
+    viewed page of the PDF file.  It saves those information through
+    =save-place=, an Emacs built-in for saving and restoring "places"
+    you visit.
