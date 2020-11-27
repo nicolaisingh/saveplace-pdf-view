@@ -4,7 +4,7 @@
 
 ;; Author: Nicolai Singh <nicolaisingh at pm.me>
 ;; URL: https://github.com/nicolaisingh/saveplace-pdf-view
-;; Version: 0.1.0
+;; Version: 1.0.0
 ;; Keywords: files, convenience
 ;; Package-Requires: ((emacs "24.1") (pdf-tools "1.0"))
 
@@ -59,17 +59,19 @@
              (bookmark (pdf-view-bookmark-make-record))
              (page (assoc 'page bookmark))
              (origin (assoc 'origin bookmark)))
-        (when cell
-          (setq save-place-alist (delq cell save-place-alist)))
-        (when (and save-place-mode
-                   (not (and (listp page)
-                             (listp origin)
-                             (= 1 (cdr page))
-                             (= 0.0 (cadr origin))
-                             (= 0.0 (cddr origin)))))
-          (setq save-place-alist
-                (cons (cons item `((pdf-view-bookmark . ,bookmark)))
-                      save-place-alist)))))))
+        (with-demoted-errors
+            "Error saving place: %S"
+          (when cell
+            (setq save-place-alist (delq cell save-place-alist)))
+          (when (and save-place-mode
+                     (not (and (listp page)
+                               (listp origin)
+                               (= 1 (cdr page))
+                               (= 0.0 (cadr origin))
+                               (= 0.0 (cddr origin)))))
+            (setq save-place-alist
+                  (cons (cons item `((pdf-view-bookmark . ,bookmark)))
+                        save-place-alist))))))))
 
 (defun saveplace-pdf-view-find-file-advice (orig-fun &rest args)
   "Function to advice around `save-place-find-file-hook'.
