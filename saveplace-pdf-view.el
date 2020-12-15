@@ -4,7 +4,7 @@
 
 ;; Author: Nicolai Singh <nicolaisingh at pm.me>
 ;; URL: https://github.com/nicolaisingh/saveplace-pdf-view
-;; Version: 1.0.1
+;; Version: 1.0.2
 ;; Keywords: files, convenience
 ;; Package-Requires: ((emacs "24.1") (pdf-tools "1.0"))
 
