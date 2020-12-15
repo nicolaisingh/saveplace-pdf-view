@@ -66,8 +66,8 @@
           (when (and save-place-mode
                      (not (and (listp page)
                                (listp origin)
-                               (or (= 1 (cdr page))
-                                   (eq nil (cdr page)))
+                               (or (null (cdr page))
+                                   (= 1 (cdr page)))
                                (or (equal '(0.0 . 0.0) (cdr origin))
                                    (eq nil (cdr origin))))))
             (setq save-place-alist
