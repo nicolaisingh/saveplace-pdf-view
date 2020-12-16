@@ -69,7 +69,7 @@
                                (or (= 1 (cdr page))
                                    (eq nil (cdr page)))
                                (or (equal '(0.0 . 0.0) (cdr origin))
-                                   (eq nil (cdr origin))))))
+                                   (null (cdr origin))))))
             (setq save-place-alist
                   (cons (cons item `((pdf-view-bookmark . ,bookmark)))
                         save-place-alist))))))))
