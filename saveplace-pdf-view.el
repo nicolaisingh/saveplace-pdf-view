@@ -4,7 +4,7 @@
 
 ;; Author: Nicolai Singh <nicolaisingh at pm.me>
 ;; URL: https://github.com/nicolaisingh/saveplace-pdf-view
-;; Version: 1.0.1
+;; Version: 1.0.2
 ;; Keywords: files, convenience
 ;; Package-Requires: ((emacs "24.1") (pdf-tools "1.0"))
 
@@ -66,8 +66,8 @@
           (when (and save-place-mode
                      (not (and (listp page)
                                (listp origin)
-                               (or (= 1 (cdr page))
-                                   (eq nil (cdr page)))
+                               (or (null (cdr page))
+                                   (= 1 (cdr page)))
                                (or (equal '(0.0 . 0.0) (cdr origin))
                                    (eq nil (cdr origin))))))
             (setq save-place-alist
