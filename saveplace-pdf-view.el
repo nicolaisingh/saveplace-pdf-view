@@ -69,8 +69,10 @@
                                (or (null (cdr page))
                                    (= 1 (cdr page)))
                                (or (equal '(0.0 . 0.0) (cdr origin))
-                                   (null (cdr origin))))))
-            (push `(,item (pdf-view-bookmark . ,bookmark)) save-place-alist)))))))
+                                   (eq nil (cdr origin))))))
+            (setq save-place-alist
+                  (cons (cons item `((pdf-view-bookmark . ,bookmark)))
+                        save-place-alist))))))))
 
 (defun saveplace-pdf-view-find-file-advice (orig-fun &rest args)
   "Function to advice around `save-place-find-file-hook'.
