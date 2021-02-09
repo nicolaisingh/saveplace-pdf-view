@@ -44,11 +44,18 @@
     (when (and cell
                (listp (cdr cell))
                (assq 'pdf-view-bookmark (cdr cell)))
-      (pdf-view-bookmark-jump (cdr (assq 'pdf-view-bookmark (cdr cell)))))
+      (cond
+       ((derived-mode-p 'pdf-view-mode)
+        (bookmark-jump (cdr (assq 'pdf-view-bookmark (cdr cell)))))
+       ((derived-mode-p 'doc-view-mode)
+        (bookmark-jump (cdr (assq 'doc-view-bookmark (cdr cell)))))))
     (setq save-place-mode t)))
 
 (defun saveplace-pdf-view-to-alist ()
-  "Save the PDF file's place using pdf-view's `pdf-view-bookmark-make-record'."
+  "Save the document's place using bookmarks.
+If the buffer is in `doc-view-mode', then use
+`doc-view-bookmark-make-record'. If the document is being viewed
+with `pdf-view-mode', use `pdf-view-bookmark-make-record'."
   (or save-place-loaded (load-save-place-alist-from-file))
   (let ((item buffer-file-name))
     (when (and item
@@ -56,7 +63,11 @@
                    (not (string-match save-place-ignore-files-regexp
                                       item))))
       (let* ((cell (assoc item save-place-alist))
-             (bookmark (pdf-view-bookmark-make-record))
+             (bookmark (cond
+                        ((derived-mode-p 'pdf-view-mode)
+                         (pdf-view-bookmark-make-record))
+                        ((derived-mode-p 'doc-view-mode)
+                         (doc-view-bookmark-make-record))))
              (page (assoc 'page bookmark))
              (origin (assoc 'origin bookmark)))
         (with-demoted-errors
@@ -71,22 +82,30 @@
                                (or (null (cdr origin))
                                    (equal '(0.0 . 0.0) (cdr origin))))))
             (setq save-place-alist
-                  (cons (cons item `((pdf-view-bookmark . ,bookmark)))
+                  (cons (cons item (cond
+                                    ((derived-mode-p 'pdf-view-mode)
+                                     `((pdf-view-bookmark . ,bookmark)))
+                                    ((derived-mode-p 'doc-view-mode)
+                                     `((doc-view-bookmark . ,bookmark)))))
                         save-place-alist))))))))
 
 (defun saveplace-pdf-view-find-file-advice (orig-fun &rest args)
   "Function to advice around `save-place-find-file-hook'.
-If the buffer being visited is not in `pdf-view-mode', call the
-original function ORIG-FUN with the ARGS."
-  (if (not (derived-mode-p 'pdf-view-mode))
+If the buffer being visited is not in `pdf-view-mode' or
+`doc-view-mode', call the original function ORIG-FUN with the
+ARGS."
+  (if (not (or (derived-mode-p 'pdf-view-mode)
+               (derived-mode-p 'doc-view-mode)))
       (apply orig-fun args)
     (saveplace-pdf-view-find-file)))
 
 (defun saveplace-pdf-view-to-alist-advice (orig-fun &rest args)
   "Function to advice around `save-place-to-alist'.
-If the buffer being visited is not in `pdf-view-mode', call the
-original function ORIG-FUN with the ARGS."
-  (if (not (derived-mode-p 'pdf-view-mode))
+If the buffer being visited is not in `pdf-view-mode' or
+`doc-view-mode', call the original function ORIG-FUN with the
+ARGS."
+  (if (not (or (derived-mode-p 'pdf-view-mode)
+               (derived-mode-p 'doc-view-mode)))
       (apply orig-fun args)
     (saveplace-pdf-view-to-alist)))
 
