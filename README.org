@@ -1,11 +1,10 @@
 #+TITLE: saveplace-pdf-view
 
-=saveplace-pdf-view= adds support for pdf-view buffers (see [[https://github.com/politza/pdf-tools][pdf-tools]])
-in the built-in mode =save-place=.  This will store the place
-(e.g. the current page and zoom) of PDF buffers under =pdf-view-mode=,
-and revisiting the PDF files later will restore the saved place.
-
-Note: This won't work with =doc-view-mode=.
+=saveplace-pdf-view= extends the built-in mode =save-place= by adding
+support for pdf-view (see [[https://github.com/politza/pdf-tools][pdf-tools]]) and DocView buffers.  This
+package will store the place (e.g. the current page and zoom) of PDF
+buffers under =pdf-view-mode= or =doc-view-mode=, and revisiting those
+PDF files later using the same mode will restore the saved place.
 
 * Installation
 
