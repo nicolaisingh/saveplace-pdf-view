@@ -29,7 +29,19 @@ Simply require the package in your init file, and make sure
 (save-place-mode 1)
 #+END_SRC
 
+If you intend to use this package with =doc-view-mode=, you may
+need to load the =bookmark= package as well:
+
+#+BEGIN_SRC elisp
+(require 'bookmark)
+(require 'saveplace-pdf-view)
+(save-place-mode 1)
+#+END_SRC
+
 * Similar Packages
+
+If you know of other packages, please let me know so I can include
+them here.
 
 - pdf-view-restore ([[https://github.com/007kevin/pdf-view-restore][Link]]):
   - From code review (commit 5a1947c): For each PDF file you visit in

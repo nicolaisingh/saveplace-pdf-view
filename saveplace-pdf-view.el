@@ -1,10 +1,10 @@
 ;;; saveplace-pdf-view.el --- Save place in pdf-view buffers -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2020-2021 Nicolai Singh
+;; Copyright (C) 2020-2023 Nicolai Singh
 
 ;; Author: Nicolai Singh <nicolaisingh at pm.me>
 ;; URL: https://github.com/nicolaisingh/saveplace-pdf-view
-;; Version: 1.0.4
+;; Version: 1.0.5
 ;; Keywords: files, convenience
 ;; Package-Requires: ((emacs "24.1"))
 
@@ -38,6 +38,7 @@
 
 ;; - João Pedro <jpedrodeamorim@gmail.com>, for making the package
 ;;   work with doc-view-mode
+;; - vizs, for fixing the compatibility with saveplace in Emacs 30
 
 ;;; Code:
 
@@ -55,10 +56,10 @@ persisted bookmark under SAVE-PLACE-ALIST-KEY."
   (or save-place-loaded (load-save-place-alist-from-file))
   (let* ((cell (assoc buffer-file-name save-place-alist)))
     (when (and cell
-               (listp (cdr cell))
-               (assq save-place-alist-key (cdr cell)))
+               (vectorp (cdr cell))
+               (assq save-place-alist-key (aref (cdr cell) 0)))
       (funcall bookmark-jump-function
-               (cdr (assq save-place-alist-key (cdr cell)))))
+               (cdr (assq save-place-alist-key (aref (cdr cell) 0)))))
     (setq save-place-mode t)))
 
 (defun saveplace-pdf-view-to-alist (save-place-alist-key make-record-function)
@@ -93,7 +94,7 @@ doc-view bookmark will replace the file's pdf-view bookmark."
                                (or (null (cdr origin))
                                    (equal '(0.0 . 0.0) (cdr origin))))))
             (setq save-place-alist
-                  (cons (cons item `((,save-place-alist-key . ,bookmark)))
+                  (cons (cons item (vector `((,save-place-alist-key . ,bookmark))))
                         save-place-alist))))))))
 
 (defun saveplace-pdf-view-find-file-advice (orig-fun &rest args)
