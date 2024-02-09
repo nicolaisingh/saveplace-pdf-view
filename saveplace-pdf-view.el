@@ -1,10 +1,10 @@
 ;;; saveplace-pdf-view.el --- Save place in pdf-view buffers -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2020-2023 Nicolai Singh
+;; Copyright (C) 2020-2024 Nicolai Singh
 
 ;; Author: Nicolai Singh <nicolaisingh at pm.me>
 ;; URL: https://github.com/nicolaisingh/saveplace-pdf-view
-;; Version: 1.0.5
+;; Version: 1.0.6
 ;; Keywords: files, convenience
 ;; Package-Requires: ((emacs "24.1"))
 
