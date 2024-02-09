@@ -53,7 +53,7 @@
   "Restore the saved place for the document, if there is one.
 BOOKMARK-JUMP-FUNCTION should be a function that can restore the
 persisted bookmark under SAVE-PLACE-ALIST-KEY."
-  (or save-place-loaded (load-save-place-alist-from-file))
+  (or save-place-loaded (save-place-load-alist-from-file))
   (let* ((cell (assoc buffer-file-name save-place-alist)))
     (when (and cell
                (vectorp (cdr cell))
@@ -72,7 +72,7 @@ doc-view-bookmark).
 Currently only one type of bookmark can be saved for a file.  For
 instance, if a file has an available pdf-view bookmark, saving a
 doc-view bookmark will replace the file's pdf-view bookmark."
-  (or save-place-loaded (load-save-place-alist-from-file))
+  (or save-place-loaded (save-place-load-alist-from-file))
   (let ((item buffer-file-name))
     (when (and item
                (or (not save-place-ignore-files-regexp)
