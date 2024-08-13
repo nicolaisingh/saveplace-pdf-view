@@ -78,12 +78,12 @@ doc-view bookmark will replace the file's pdf-view bookmark."
                (or (not save-place-ignore-files-regexp)
                    (not (string-match save-place-ignore-files-regexp
                                       item))))
-      (let* ((cell (assoc item save-place-alist))
-             (bookmark (funcall make-record-function))
-             (page (assoc 'page bookmark))
-             (origin (assoc 'origin bookmark)))
-        (with-demoted-errors
-            "Error saving place: %S"
+      (with-demoted-errors
+          "Error saving place: %S"
+        (let* ((cell (assoc item save-place-alist))
+               (bookmark (funcall make-record-function))
+               (page (assoc 'page bookmark))
+               (origin (assoc 'origin bookmark)))
           (when cell
             (setq save-place-alist (delq cell save-place-alist)))
           (when (and save-place-mode
